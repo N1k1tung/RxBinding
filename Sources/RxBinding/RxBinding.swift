@@ -54,7 +54,7 @@ public func ~><T, O: ObservableConvertibleType>(_ lhs: O, _ rhs: @escaping (T) -
 
 @resultBuilder
 public struct BindingsBuilder {
-    static func buildBlock(_ components: Disposable...) -> [Disposable] {
+    public static func buildBlock(_ components: Disposable...) -> [Disposable] {
         components
     }
 }
