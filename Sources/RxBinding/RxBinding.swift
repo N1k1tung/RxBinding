@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 
-extension Reactive where Base: AnyObject {
+public extension Reactive where Base: AnyObject {
     /// utilize result builder to allow using { } instead of ( ) and no need for ,
     /// - Parameter b: collection of build blocks
     func bind(@BindingsBuilder _ bindings: () -> [Disposable]) {
@@ -35,12 +35,12 @@ extension Reactive where Base: AnyObject {
 
 infix operator ~>
 
-func ~><O: ObservableConvertibleType, B: ObserverType>(_ lhs: O, _ rhs: B) -> Disposable where O.Element == B.Element {
+public func ~><O: ObservableConvertibleType, B: ObserverType>(_ lhs: O, _ rhs: B) -> Disposable where O.Element == B.Element {
     lhs.asObservable().observe(on: MainScheduler.instance)
         .bind(to: rhs.asObserver())
 }
 
-func ~><T, O: ObservableConvertibleType>(_ lhs: O, _ rhs: @escaping (T) -> Void) -> Disposable where O.Element == T {
+public func ~><T, O: ObservableConvertibleType>(_ lhs: O, _ rhs: @escaping (T) -> Void) -> Disposable where O.Element == T {
     lhs.asObservable().observe(on: MainScheduler.instance)
         .bind(to: AnyObserver {
             switch $0 {
@@ -53,7 +53,7 @@ func ~><T, O: ObservableConvertibleType>(_ lhs: O, _ rhs: @escaping (T) -> Void)
 }
 
 @resultBuilder
-struct BindingsBuilder {
+public struct BindingsBuilder {
     static func buildBlock(_ components: Disposable...) -> [Disposable] {
         components
     }
